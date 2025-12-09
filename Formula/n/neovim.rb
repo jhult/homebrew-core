@@ -2,12 +2,15 @@ class Neovim < Formula
   desc "Ambitious Vim-fork focused on extensibility and agility"
   homepage "https://neovim.io/"
   license "Apache-2.0"
-
-  head "https://github.com/neovim/neovim.git", branch: "master"
+  revision 1
 
   stable do
+    # TODO: Bump to use tree-sitter 0.26+ when new Neovim release supports it
     url "https://github.com/neovim/neovim/archive/refs/tags/v0.11.5.tar.gz"
     sha256 "c63450dfb42bb0115cd5e959f81c77989e1c8fd020d5e3f1e6d897154ce8b771"
+
+    # TODO: remove `head` block when stable supports tree-sitter 0.26+.
+    depends_on "tree-sitter@0.25"
 
     # Keep resources updated according to:
     # https://github.com/neovim/neovim/blob/v#{version}/cmake.deps/deps.txt
@@ -47,6 +50,12 @@ class Neovim < Formula
     end
   end
 
+  # TODO: remove `head` block when stable supports tree-sitter 0.26+.
+  head do
+    url "https://github.com/neovim/neovim.git", branch: "master"
+    depends_on "tree-sitter"
+  end
+
   livecheck do
     url :stable
     regex(/^v?(\d+(?:\.\d+)+)$/i)
@@ -67,7 +76,6 @@ class Neovim < Formula
   depends_on "lpeg"
   depends_on "luajit"
   depends_on "luv"
-  depends_on "tree-sitter"
   depends_on "unibilium"
   depends_on "utf8proc"
 
